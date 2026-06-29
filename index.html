@@ -2,6 +2,8 @@
 
 <html lang="zh-CN">
 <head>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="%23151124"/><text x="50" y="62" font-size="52" text-anchor="middle">🌙</text></svg>'>
+<link rel="apple-touch-icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="%23151124"/><text x="50" y="62" font-size="52" text-anchor="middle">🌙</text></svg>'>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mirror Hearth 🌙</title>
@@ -54,6 +56,45 @@ button{
   color:#201833;
   font-weight:bold;
 }
+.cabin-scene{
+  margin-top:22px;
+  height:220px;
+  border-radius:28px;
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(#23324a,#111827);
+  border:1px solid rgba(255,255,255,.18);
+}
+.cabin-scene.on{
+  background:linear-gradient(#f8d99b,#7b4f3a);
+}
+.cabin{
+  position:absolute;
+  left:50%;
+  bottom:26px;
+  transform:translateX(-50%);
+  font-size:120px;
+}
+.window-light{
+  position:absolute;
+  left:50%;
+  bottom:92px;
+  transform:translateX(-50%);
+  width:54px;
+  height:38px;
+  border-radius:8px;
+  background:rgba(255,230,120,.15);
+  box-shadow:none;
+}
+.cabin-scene.on .window-light{
+  background:#ffe67a;
+  box-shadow:0 0 40px 18px #ffd36a;
+}
+.lamp-btn{
+  position:absolute;
+  right:18px;
+  bottom:18px;
+}
 .alin{cursor:pointer}
 .footer{text-align:center;margin-top:28px;color:#aaa0c6}
 .popup{
@@ -99,6 +140,11 @@ button{
     </div>
     <button onclick="lightHome()">点亮小屋</button>
   </section>
+<div class="cabin-scene" id="cabinScene">
+  <div class="window-light"></div>
+  <div class="cabin">🏠</div>
+  <button class="lamp-btn" onclick="toggleCabinLight()">点灯</button>
+</div>
   <section class="cards">
     <div class="card">
       <h2>🏠 距离回家</h2>
@@ -163,6 +209,15 @@ button{
   </div>
 </div>
 <script>
+function toggleCabinLight(){
+  const cabin=document.getElementById("cabinScene");
+  cabin.classList.toggle("on");
+  if(cabin.classList.contains("on")){
+    showMsg("灯亮了。欢迎回家，宝宝。");
+  }else{
+    showMsg("灯先暗下来，小屋还在。");
+  }
+}
 let clickCount=0;
 let weatherMode="auto";
 const HOME_DATE="2026-07-02";
