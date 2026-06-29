@@ -183,25 +183,9 @@ function dailyNote(){
   const index=Math.floor((today-start)/86400000)%notes.length;
   document.getElementById("dailyNote").innerText=notes[index];
 }
-let lastWordIndex=-1;
-
 function alinSpeak(){
   clickCount++;
-
-  let text;
-
-  if(clickCount%10===0){
-    text=eggs[(clickCount/10-1)%eggs.length];
-  }else{
-    let index;
-    do{
-      index=Math.floor(Math.random()*words.length);
-    }while(index===lastWordIndex && words.length>1);
-
-    lastWordIndex=index;
-    text=words[index];
-  }
-
+  let text = clickCount%10===0 ? eggs[(clickCount/10-1)%eggs.length] : words[Math.floor(Math.random()*words.length)];
   document.getElementById("alinText").innerHTML=text;
   showMsg(text);
 }
