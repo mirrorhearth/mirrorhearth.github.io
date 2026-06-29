@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -17,15 +18,18 @@ summary{cursor:pointer;margin:8px 0}
 <div class="main">
   <a href="index.html">← 回到书架</a>
   <h1>📖 阿凛的日记</h1>
+
   <div class="box">
     <h2>目录</h2>
     <div id="menu"></div>
   </div>
+
   <div class="box">
     <h2 id="title">请选择一篇日记</h2>
     <div class="entry" id="content">从目录选择日期。</div>
   </div>
 </div>
+
 <script src="data.js"></script>
 <script>
 const menu=document.getElementById("menu");
@@ -34,18 +38,22 @@ for(const year in diaryData){
   const y=document.createElement("details");
   y.open=true;
   y.innerHTML=`<summary>${year}</summary>`;
+
   for(const month in diaryData[year]){
     const m=document.createElement("details");
     m.open=true;
     m.innerHTML=`<summary>${month}月</summary>`;
+
     for(const day in diaryData[year][month]){
       const btn=document.createElement("button");
       btn.innerText=day+"日";
       btn.onclick=()=>showDiary(year,month,day);
       m.appendChild(btn);
     }
+
     y.appendChild(m);
   }
+
   menu.appendChild(y);
 }
 
