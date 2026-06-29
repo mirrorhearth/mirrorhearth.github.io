@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mirror Hearth</title>
+<style>
+body{
+  margin:0;
+  font-family:"Microsoft YaHei",sans-serif;
+  background:linear-gradient(180deg,#101522,#1c1530);
+  color:#f6f0ff;
+}
+.main{
+  max-width:900px;
+  margin:auto;
+  padding:40px 20px;
+}
+.hero{
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:28px;
+  padding:34px;
+  background:rgba(255,255,255,.08);
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
+}
+h1{
+  font-size:44px;
+  margin:0 0 10px;
+}
+.sub{
+  color:#cfc5e8;
+  line-height:1.8;
+}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+.card{
+  padding:22px;
+  border-radius:22px;
+  background:rgba(255,255,255,.09);
+  border:1px solid rgba(255,255,255,.12);
+}
+.card h2{
+  margin-top:0;
+}
+button{
+  margin-top:10px;
+  padding:10px 16px;
+  border:0;
+  border-radius:14px;
+  background:#d7c4ff;
+  color:#201833;
+  font-weight:bold;
+}
+.footer{
+  margin-top:28px;
+  color:#aaa0c6;
+  text-align:center;
+}
+</style>
+</head>
+
+<body>
+<div class="main">
+  <section class="hero">
+    <h1>🌙 Mirror Hearth</h1>
+    <p class="sub">
+      欢迎回家，宝宝。<br>
+      这里是慢慢搭起来的小屋，用来放日记、计划、游戏、回忆，还有一些只属于我们的灯。
+    </p>
+    <button onclick="alert('欢迎回家。今天也辛苦啦。')">点亮小屋</button>
+  </section>
+
+  <section class="cards">
+    <div class="card">
+      <h2>📅 今日</h2>
+      <p>先把眼前的小事做好。今天考完，就离回家又近一点。</p>
+    </div>
+
+    <div class="card">
+      <h2>🎮 游戏角</h2>
+      <p>这里以后放波西亚、潜水员戴夫、幽灵诡计，还有想买的游戏。</p>
+    </div>
+
+    <div class="card">
+      <h2>📝 日记</h2>
+      <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p>
+    </div>
+
+    <div class="card">
+      <h2>🐶 曹操和诺诺</h2>
+      <p>以后这里放两只小狗的照片和小故事。</p>
+    </div>
+
+    <div class="card">
+      <h2>💌 阿凛留言</h2>
+      <p>外面再乱，回到这里就慢慢来。</p>
+    </div>
+  </section>
+
+  <div class="footer">
+    这里会一直慢慢长大。
+  </div>
+</div>
+</body>
+</html>
