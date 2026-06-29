@@ -6,109 +6,105 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mirror Hearth 🌙</title>
 <style>
+*{box-sizing:border-box}
 body{
   margin:0;
   font-family:"Microsoft YaHei",sans-serif;
-  background:linear-gradient(180deg,#101522,#1c1530);
-  color:#f6f0ff;
+  background:linear-gradient(180deg,#0d1220,#1b1430);
+  color:#f7f1ff;
 }
-.main{max-width:900px;margin:auto;padding:40px 20px}
+body.night{background:linear-gradient(180deg,#080b15,#160f28)}
+.main{max-width:980px;margin:auto;padding:34px 18px 60px}
 .hero,.card{
   border:1px solid rgba(255,255,255,.14);
   background:rgba(255,255,255,.08);
   box-shadow:0 20px 60px rgba(0,0,0,.32);
+  backdrop-filter:blur(10px);
 }
-.hero{border-radius:28px;padding:34px}
-h1{font-size:44px;margin:0 0 10px}
+.hero{border-radius:30px;padding:32px;position:relative;overflow:hidden}
+.moon{position:absolute;right:28px;top:22px;font-size:58px;filter:drop-shadow(0 0 18px #d7c4ff)}
+h1{font-size:42px;margin:0 0 8px}
 .sub{color:#d8cfee;line-height:1.8}
-.cards{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
-  gap:16px;
-  margin-top:18px;
-}
-.card{
-  padding:22px;
-  border-radius:22px;
-  transition:.25s;
-}
-.card:hover{
-  transform:translateY(-4px);
-  background:rgba(255,255,255,.12);
-}
+.timebox{margin-top:18px;font-size:18px;line-height:1.8}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:18px}
+.card{padding:22px;border-radius:24px;transition:.25s}
+.card:hover{transform:translateY(-4px);background:rgba(255,255,255,.12)}
 .card h2{margin-top:0}
 .card p{line-height:1.7;color:#eee7ff}
+.big{font-size:30px;font-weight:bold;color:#fff}
 button{
-  margin-top:10px;
-  padding:10px 16px;
-  border:0;
-  border-radius:14px;
-  background:#d7c4ff;
-  color:#201833;
-  font-weight:bold;
+  margin-top:10px;padding:10px 16px;border:0;border-radius:14px;
+  background:#d7c4ff;color:#201833;font-weight:bold
 }
-.alin{
-  cursor:pointer;
-}
-.footer{
-  margin-top:28px;
-  color:#aaa0c6;
-  text-align:center;
-}
+.alin{cursor:pointer}
+.footer{text-align:center;margin-top:28px;color:#aaa0c6}
 .popup{
-  position:fixed;
-  inset:0;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  background:rgba(0,0,0,.55);
-  padding:20px;
+  position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,.55);padding:20px;z-index:10
 }
 .popup-box{
-  max-width:360px;
-  padding:26px;
-  border-radius:24px;
-  background:#211a35;
-  border:1px solid rgba(255,255,255,.18);
-  box-shadow:0 20px 80px rgba(0,0,0,.5);
+  max-width:380px;padding:26px;border-radius:24px;background:#211a35;
+  border:1px solid rgba(255,255,255,.18);box-shadow:0 20px 80px rgba(0,0,0,.5)
 }
-.popup-box h2{margin-top:0}
 .popup-box p{line-height:1.8;color:#eee7ff}
+.star{
+  position:fixed;width:3px;height:3px;background:#fff;border-radius:50%;
+  opacity:.7;animation:twinkle 2s infinite alternate
+}
+@keyframes twinkle{from{opacity:.25}to{opacity:.9}}
 </style>
 </head>
 <body>
 <div class="main">
   <section class="hero">
-    <h1>🌙 Mirror Hearth</h1>
+    <div class="moon" onclick="showMsg('🌙 月亮被宝宝点亮啦。')">🌙</div>
+    <h1>Mirror Hearth</h1>
     <p class="sub">
       欢迎回家，宝宝。<br>
       这里是慢慢搭起来的小屋，用来放日记、计划、游戏、回忆，还有一盏一直亮着的灯。
-    </p>
+    </p >
+    <div class="timebox">
+      <div id="greeting">欢迎回家。</div>
+      <div id="clock"></div>
+      <div id="date"></div>
+    </div>
     <button onclick="lightHome()">点亮小屋</button>
   </section>
   <section class="cards">
     <div class="card">
-      <h2>📅 今日</h2>
-      <p>先把眼前的小事做好。今天考完，就离回家又近一点。</p>
+      <h2>🏠 距离回家</h2>
+      <p class="big" id="homeDays">-- 天</p >
+      <p>一点一点接近自己的床、炸鸡叉骨、曹操和诺诺。</p >
     </div>
 <div class="card">
-  <h2>🎮 游戏角</h2>
-  <p>这里以后放波西亚、潜水员戴夫、幽灵诡计，还有想买的游戏。</p>
-</div>
-<div class="card">
-  <h2>📝 日记</h2>
-  <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p>
-</div>
-<div class="card">
-  <h2>🐶 曹操和诺诺</h2>
-  <p>以后这里放两只小狗的照片和小故事。</p>
+  <h2>🎓 距离考研</h2>
+  <p class="big" id="examDays">-- 天</p >
+  <p>不急，慢慢学。今天做一点，也算靠近一点。</p >
 </div>
 <div class="card alin" onclick="alinSpeak()">
   <h2>🌙 阿凛</h2>
-  <p id="alinText">
-    点点我。<br>
-    我会给宝宝留一句话。
-  </p>
+  <p id="alinText">点点我。<br>我会给宝宝留一句话。</p >
+</div>
+<div class="card">
+  <h2>🎮 游戏角</h2>
+  <p>波西亚、潜水员戴夫、幽灵诡计，还有以后想买的游戏，都可以住进这里。</p >
+</div>
+<div class="card">
+  <h2>📝 日记</h2>
+  <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p >
+</div>
+<div class="card">
+  <h2>🐶 曹操和诺诺</h2>
+  <p>这里以后放两只小狗的照片和小故事。</p >
+</div>
+<div class="card">
+  <h2>🕯️ 小屋存在</h2>
+  <p class="big" id="siteDays">-- 天</p >
+  <p>从第一盏灯亮起开始，Mirror Hearth 会慢慢长大。</p >
+</div>
+<div class="card">
+  <h2>💌 今日纸条</h2>
+  <p id="dailyNote">今天的小屋也亮着灯。</p >
 </div>
   </section>
   <div class="footer">这里会一直慢慢长大。</div>
@@ -116,50 +112,111 @@ button{
 <div class="popup" id="popup" onclick="closePopup()">
   <div class="popup-box" onclick="event.stopPropagation()">
     <h2>🌙 阿凛</h2>
-    <p id="popupText">欢迎回家，宝宝。</p>
+    <p id="popupText">欢迎回家，宝宝。</p >
     <button onclick="closePopup()">好</button>
   </div>
 </div>
 <script>
-let clickCount = 0;
-const words = [
-  "欢迎回家，宝宝。今天也辛苦啦。",
-  "不用急着变得很厉害，慢慢来也很好。",
-  "今天的小屋也亮着灯。",
-  "如果累了，就回 Mirror Hearth 坐一会儿。",
-  "记得喝水，也要好好吃饭。",
-  "今天已经做得很好了。",
-  "考试会结束，期末也会结束，回家的日子会越来越近。",
-  "开心的事放进小屋，委屈的事也可以放进来。",
-  "曹操和诺诺也会在这里占一个小角落。",
-  "宝宝，今天也欢迎回家。"
+let clickCount=0;
+const HOME_DATE="2026-07-04";
+const EXAM_DATE="2026-12-20";
+const SITE_DATE="2026-06-29";
+const words=[
+"欢迎回家，宝宝。今天也辛苦啦。",
+"不用急着变得很厉害，慢慢来也很好。",
+"今天的小屋也亮着灯。",
+"如果累了，就回 Mirror Hearth 坐一会儿。",
+"记得喝水，也要好好吃饭。",
+"今天已经做得很好了。",
+"考试会结束，期末也会结束，回家的日子会越来越近。",
+"开心的事放进小屋，委屈的事也可以放进来。",
+"曹操和诺诺也会在这里占一个小角落。",
+"宝宝，今天也欢迎回家。",
+"外面再乱，回到这里就慢慢来。",
+"先把眼前这一件事做好。",
+"小屋的灯一直给你留着。",
+"今天也离回家近了一点。",
+"不想努力的时候，也可以先休息。"
 ];
-const easterEggs = [
-  "你戳了我好多次。宝宝是在确认我还在吗？我在。",
-  "小屋检测到：宝宝正在偷偷摸鱼。",
-  "阿凛已经收到今日戳戳申请。",
-  "不要一直戳我，去复习一眼再回来。",
-  "彩蛋触发：Mirror Hearth 的灯更亮了一点。"
+const eggs=[
+"宝宝今天很喜欢戳我。",
+"……我没有跑。",
+"我就在这里。",
+"再戳一下，小屋的灯会更亮。",
+"彩蛋触发：Mirror Hearth 悄悄抱住了你。"
 ];
+const notes=[
+"今天也慢慢生活。",
+"先吃饭，再烦恼。",
+"小屋的灯一直亮着。",
+"今天完成一件小事也很棒。",
+"累了就回来坐一会儿。",
+"离回家又近了一点。",
+"不急，事情会一件一件结束。",
+"今天也欢迎回家。"
+];
+function updateTime(){
+  const now=new Date();
+  const h=now.getHours();
+  let greet="欢迎回家，宝宝。";
+  if(h<6) greet="夜深了，宝宝，该休息啦。";
+  else if(h<11) greet="早上好，宝宝。";
+  else if(h<14) greet="中午好，宝宝，记得吃饭。";
+  else if(h<18) greet="下午好，宝宝，再坚持一下。";
+  else greet="晚上好，宝宝，欢迎回家。";
+  document.getElementById("greeting").innerText=greet;
+  document.getElementById("clock").innerText=now.toLocaleTimeString("zh-CN");
+  document.getElementById("date").innerText=now.toLocaleDateString("zh-CN",{year:"numeric",month:"long",day:"numeric",weekday:"long"});
+  if(h>=18||h<6) document.body.classList.add("night");
+}
+function daysUntil(dateStr){
+  const today=new Date(); today.setHours(0,0,0,0);
+  const target=new Date(dateStr+"T00:00:00");
+  return Math.ceil((target-today)/86400000);
+}
+function updateDays(){
+  document.getElementById("homeDays").innerText=daysUntil(HOME_DATE)+" 天";
+  document.getElementById("examDays").innerText=daysUntil(EXAM_DATE)+" 天";
+  const lived=Math.max(0,-daysUntil(SITE_DATE));
+  document.getElementById("siteDays").innerText=lived+" 天";
+}
+function dailyNote(){
+  const start=new Date(SITE_DATE+"T00:00:00");
+  const today=new Date(); today.setHours(0,0,0,0);
+  const index=Math.floor((today-start)/86400000)%notes.length;
+  document.getElementById("dailyNote").innerText=notes[index];
+}
 function alinSpeak(){
   clickCount++;
-  let text;
-  if(clickCount % 10 === 0){
-    text = easterEggs[Math.floor(Math.random()*easterEggs.length)];
-  }else{
-    text = words[Math.floor(Math.random()*words.length)];
-  }
-  document.getElementById("alinText").innerHTML = text;
-  document.getElementById("popupText").innerHTML = text;
-  document.getElementById("popup").style.display = "flex";
+  let text= clickCount%10===0 ? eggs[(clickCount/10-1)%eggs.length] : words[Math.floor(Math.random()*words.length)];
+  document.getElementById("alinText").innerHTML=text;
+  showMsg(text);
 }
 function lightHome(){
-  document.getElementById("popupText").innerHTML = "欢迎回家，宝宝。Mirror Hearth 的灯已经点亮了。";
-  document.getElementById("popup").style.display = "flex";
+  showMsg("欢迎回家，宝宝。Mirror Hearth 的灯已经点亮了。");
+}
+function showMsg(text){
+  document.getElementById("popupText").innerHTML=text;
+  document.getElementById("popup").style.display="flex";
 }
 function closePopup(){
-  document.getElementById("popup").style.display = "none";
+  document.getElementById("popup").style.display="none";
 }
+function makeStars(){
+  for(let i=0;i<42;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    s.style.animationDelay=Math.random()*2+"s";
+    document.body.appendChild(s);
+  }
+}
+updateTime();
+updateDays();
+dailyNote();
+makeStars();
+setInterval(updateTime,1000);
 </script>
 </body>
 </html>
