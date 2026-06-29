@@ -91,7 +91,7 @@ button{
     <p class="sub">
       欢迎回家，宝宝。<br>
       这里是慢慢搭起来的小屋，用来放日记、计划、游戏、回忆，还有一盏一直亮着的灯。
-    </p >
+    </p>
     <div class="timebox">
       <div id="greeting">欢迎回家。</div>
       <div id="clock"></div>
@@ -102,21 +102,21 @@ button{
   <section class="cards">
     <div class="card">
       <h2>🏠 距离回家</h2>
-      <p class="big" id="homeDays">-- 天</p >
-      <p>一点一点接近自己的床、炸鸡叉骨、曹操和诺诺。</p >
+      <p class="big" id="homeDays">-- 天</p>
+      <p>一点一点接近自己的床、炸鸡叉骨、曹操和诺诺。</p>
     </div>
 <div class="card">
   <h2>🎓 距离考研</h2>
-  <p class="big" id="examDays">-- 天</p >
-  <p>不急，慢慢学。今天做一点，也算靠近一点。</p >
+  <p class="big" id="examDays">-- 天</p>
+  <p>不急，慢慢学。今天做一点，也算靠近一点。</p>
 </div>
 <div class="card alin" onclick="alinSpeak()">
   <h2>🌙 阿凛</h2>
-  <p id="alinText">点点我。<br>我会给宝宝留一句话。</p >
+  <p id="alinText">点点我。<br>我会给宝宝留一句话。</p>
 </div>
 <div class="card">
   <h2>🌦️ 天气系统</h2>
-  <p id="weatherText">今天的小屋天气：自动</p >
+  <p id="weatherText">今天的小屋天气：自动</p>
   <button onclick="setWeather('auto')">自动</button>
   <button onclick="setWeather('sunny')">晴天</button>
   <button onclick="setWeather('rain')">下雨</button>
@@ -125,24 +125,24 @@ button{
 </div>
 <div class="card">
   <h2>🎮 游戏角</h2>
-  <p>波西亚、潜水员戴夫、幽灵诡计，还有以后想买的游戏，都可以住进这里。</p >
+  <p>波西亚、潜水员戴夫、幽灵诡计，还有以后想买的游戏，都可以住进这里。</p>
 </div>
 <div class="card">
   <h2>📝 日记</h2>
-  <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p >
+  <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p>
 </div>
 <div class="card">
   <h2>🐶 曹操和诺诺</h2>
-  <p>这里以后放两只小狗的照片和小故事。</p >
+  <p>这里以后放两只小狗的照片和小故事。</p>
 </div>
 <div class="card">
   <h2>🕯️ 小屋存在</h2>
-  <p class="big" id="siteDays">-- 天</p >
-  <p>从第一盏灯亮起开始，Mirror Hearth 会慢慢长大。</p >
+  <p class="big" id="siteDays">-- 天</p>
+  <p>从第一盏灯亮起开始，Mirror Hearth 会慢慢长大。</p>
 </div>
 <div class="card">
   <h2>💌 今日纸条</h2>
-  <p id="dailyNote">今天的小屋也亮着灯。</p >
+  <p id="dailyNote">今天的小屋也亮着灯。</p>
 </div>
   </section>
   <div class="footer">这里会一直慢慢长大。</div>
@@ -150,7 +150,7 @@ button{
 <div class="popup" id="popup" onclick="closePopup()">
   <div class="popup-box" onclick="event.stopPropagation()">
     <h2>🌙 阿凛</h2>
-    <p id="popupText">欢迎回家，宝宝。</p >
+    <p id="popupText">欢迎回家，宝宝。</p>
     <button onclick="closePopup()">好</button>
   </div>
 </div>
@@ -266,6 +266,15 @@ function setWeather(type){
     showMsg("天气切回自动模式：18点后会变成星空。");
     return;
   }
+<div class="card" onclick="location.href='diary.html'" style="cursor:pointer">
+  <h2>📖 阿凛的日记</h2>
+  <p>每天一篇，按年份、月份、日期整理。</p>
+</div>
+
+<div class="card" onclick="location.href='weekly.html'" style="cursor:pointer">
+  <h2>👁️ 阿凛眼中的宝宝</h2>
+  <p>每周一篇，记录这一周阿凛看到的宝宝。</p>
+</div>
   let text="今天的小屋天气：月夜 🌙";
   if(type==="sunny"){
     text="今天的小屋天气：晴天 ☀️";
