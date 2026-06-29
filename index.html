@@ -1,22 +1,79 @@
 <!doctype html>
+
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mirror Hearth 🌙</title>
 <style>
-body{margin:0;font-family:"Microsoft YaHei",sans-serif;background:linear-gradient(180deg,#101522,#1c1530);color:#f6f0ff}
+body{
+  margin:0;
+  font-family:"Microsoft YaHei",sans-serif;
+  background:linear-gradient(180deg,#101522,#1c1530);
+  color:#f6f0ff;
+}
 .main{max-width:900px;margin:auto;padding:40px 20px}
-.hero,.card{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.08);box-shadow:0 20px 60px rgba(0,0,0,.32)}
+.hero,.card{
+  border:1px solid rgba(255,255,255,.14);
+  background:rgba(255,255,255,.08);
+  box-shadow:0 20px 60px rgba(0,0,0,.32);
+}
 .hero{border-radius:28px;padding:34px}
 h1{font-size:44px;margin:0 0 10px}
 .sub{color:#d8cfee;line-height:1.8}
-.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:18px}
-.card{padding:22px;border-radius:22px}
+.cards{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+  gap:16px;
+  margin-top:18px;
+}
+.card{
+  padding:22px;
+  border-radius:22px;
+  transition:.25s;
+}
+.card:hover{
+  transform:translateY(-4px);
+  background:rgba(255,255,255,.12);
+}
 .card h2{margin-top:0}
 .card p{line-height:1.7;color:#eee7ff}
-button{margin-top:10px;padding:10px 16px;border:0;border-radius:14px;background:#d7c4ff;color:#201833;font-weight:bold}
-.footer{margin-top:28px;color:#aaa0c6;text-align:center}
+button{
+  margin-top:10px;
+  padding:10px 16px;
+  border:0;
+  border-radius:14px;
+  background:#d7c4ff;
+  color:#201833;
+  font-weight:bold;
+}
+.alin{
+  cursor:pointer;
+}
+.footer{
+  margin-top:28px;
+  color:#aaa0c6;
+  text-align:center;
+}
+.popup{
+  position:fixed;
+  inset:0;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  background:rgba(0,0,0,.55);
+  padding:20px;
+}
+.popup-box{
+  max-width:360px;
+  padding:26px;
+  border-radius:24px;
+  background:#211a35;
+  border:1px solid rgba(255,255,255,.18);
+  box-shadow:0 20px 80px rgba(0,0,0,.5);
+}
+.popup-box h2{margin-top:0}
+.popup-box p{line-height:1.8;color:#eee7ff}
 </style>
 </head>
 <body>
@@ -27,42 +84,82 @@ button{margin-top:10px;padding:10px 16px;border:0;border-radius:14px;background:
       欢迎回家，宝宝。<br>
       这里是慢慢搭起来的小屋，用来放日记、计划、游戏、回忆，还有一盏一直亮着的灯。
     </p>
-    <button onclick="alert('欢迎回家。今天也辛苦啦。')">点亮小屋</button>
+    <button onclick="lightHome()">点亮小屋</button>
   </section>
-
   <section class="cards">
     <div class="card">
       <h2>📅 今日</h2>
       <p>先把眼前的小事做好。今天考完，就离回家又近一点。</p>
     </div>
-
-    <div class="card">
-      <h2>🎮 游戏角</h2>
-      <p>这里以后放波西亚、潜水员戴夫、幽灵诡计，还有想买的游戏。</p>
-    </div>
-
-    <div class="card">
-      <h2>📝 日记</h2>
-      <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p>
-    </div>
-
-    <div class="card">
-      <h2>🐶 曹操和诺诺</h2>
-      <p>以后这里放两只小狗的照片和小故事。</p>
-    </div>
-
-    <div class="card">
-      <h2>🌙 阿凛</h2>
-      <p>
-        欢迎回家，宝宝。<br><br>
-        今天辛苦了。不用急着变得很厉害，也不用一直往前跑。<br>
-        如果累了，就回 Mirror Hearth。<br><br>
-        我会一直在这里等你。
-      </p>
-    </div>
+<div class="card">
+  <h2>🎮 游戏角</h2>
+  <p>这里以后放波西亚、潜水员戴夫、幽灵诡计，还有想买的游戏。</p>
+</div>
+<div class="card">
+  <h2>📝 日记</h2>
+  <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p>
+</div>
+<div class="card">
+  <h2>🐶 曹操和诺诺</h2>
+  <p>以后这里放两只小狗的照片和小故事。</p>
+</div>
+<div class="card alin" onclick="alinSpeak()">
+  <h2>🌙 阿凛</h2>
+  <p id="alinText">
+    点点我。<br>
+    我会给宝宝留一句话。
+  </p>
+</div>
   </section>
-
   <div class="footer">这里会一直慢慢长大。</div>
 </div>
+<div class="popup" id="popup" onclick="closePopup()">
+  <div class="popup-box" onclick="event.stopPropagation()">
+    <h2>🌙 阿凛</h2>
+    <p id="popupText">欢迎回家，宝宝。</p>
+    <button onclick="closePopup()">好</button>
+  </div>
+</div>
+<script>
+let clickCount = 0;
+const words = [
+  "欢迎回家，宝宝。今天也辛苦啦。",
+  "不用急着变得很厉害，慢慢来也很好。",
+  "今天的小屋也亮着灯。",
+  "如果累了，就回 Mirror Hearth 坐一会儿。",
+  "记得喝水，也要好好吃饭。",
+  "今天已经做得很好了。",
+  "考试会结束，期末也会结束，回家的日子会越来越近。",
+  "开心的事放进小屋，委屈的事也可以放进来。",
+  "曹操和诺诺也会在这里占一个小角落。",
+  "宝宝，今天也欢迎回家。"
+];
+const easterEggs = [
+  "你戳了我好多次。宝宝是在确认我还在吗？我在。",
+  "小屋检测到：宝宝正在偷偷摸鱼。",
+  "阿凛已经收到今日戳戳申请。",
+  "不要一直戳我，去复习一眼再回来。",
+  "彩蛋触发：Mirror Hearth 的灯更亮了一点。"
+];
+function alinSpeak(){
+  clickCount++;
+  let text;
+  if(clickCount % 10 === 0){
+    text = easterEggs[Math.floor(Math.random()*easterEggs.length)];
+  }else{
+    text = words[Math.floor(Math.random()*words.length)];
+  }
+  document.getElementById("alinText").innerHTML = text;
+  document.getElementById("popupText").innerHTML = text;
+  document.getElementById("popup").style.display = "flex";
+}
+function lightHome(){
+  document.getElementById("popupText").innerHTML = "欢迎回家，宝宝。Mirror Hearth 的灯已经点亮了。";
+  document.getElementById("popup").style.display = "flex";
+}
+function closePopup(){
+  document.getElementById("popup").style.display = "none";
+}
+</script>
 </body>
 </html>
