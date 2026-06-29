@@ -10,31 +10,49 @@
 body{
   margin:0;
   font-family:"Microsoft YaHei",sans-serif;
-  background:linear-gradient(180deg,#0d1220,#1b1430);
+  color:#f7f1ff;
+  overflow-x:hidden;
+  transition:background 1.2s ease,color 1.2s ease;
+}
+body.day{
+  background:linear-gradient(180deg,#8fc7ff,#d7eaff 55%,#f6e5ff);
+  color:#24304a;
+}
+body.night{
+  background:linear-gradient(180deg,#080b15,#160f28);
   color:#f7f1ff;
 }
-body.night{background:linear-gradient(180deg,#080b15,#160f28)}
-.main{max-width:980px;margin:auto;padding:34px 18px 60px}
+body.sunny{background:linear-gradient(180deg,#8fc7ff,#ffe6a8)}
+body.cloudy{background:linear-gradient(180deg,#9aa8bd,#566071)}
+.main{max-width:980px;margin:auto;padding:34px 18px 60px;position:relative;z-index:2}
 .hero,.card{
-  border:1px solid rgba(255,255,255,.14);
-  background:rgba(255,255,255,.08);
-  box-shadow:0 20px 60px rgba(0,0,0,.32);
+  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.18);
+  box-shadow:0 20px 60px rgba(0,0,0,.22);
   backdrop-filter:blur(10px);
 }
+body.day .hero,body.day .card{background:rgba(255,255,255,.55);color:#24304a}
+body.day .card p,body.day .sub{color:#43506b}
 .hero{border-radius:30px;padding:32px;position:relative;overflow:hidden}
-.moon{position:absolute;right:28px;top:22px;font-size:58px;filter:drop-shadow(0 0 18px #d7c4ff)}
+.moon{position:absolute;right:28px;top:22px;font-size:58px;filter:drop-shadow(0 0 18px #d7c4ff);cursor:pointer}
+.sun{position:absolute;right:28px;top:22px;font-size:58px;filter:drop-shadow(0 0 20px #fff0a8);cursor:pointer}
 h1{font-size:42px;margin:0 0 8px}
 .sub{color:#d8cfee;line-height:1.8}
 .timebox{margin-top:18px;font-size:18px;line-height:1.8}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:18px}
 .card{padding:22px;border-radius:24px;transition:.25s}
-.card:hover{transform:translateY(-4px);background:rgba(255,255,255,.12)}
+.card:hover{transform:translateY(-4px);background:rgba(255,255,255,.25)}
 .card h2{margin-top:0}
 .card p{line-height:1.7;color:#eee7ff}
-.big{font-size:30px;font-weight:bold;color:#fff}
+.big{font-size:30px;font-weight:bold;color:inherit}
 button{
-  margin-top:10px;padding:10px 16px;border:0;border-radius:14px;
-  background:#d7c4ff;color:#201833;font-weight:bold
+  margin:8px 4px 0 0;
+  padding:10px 16px;
+  border:0;
+  border-radius:14px;
+  background:#d7c4ff;
+  color:#201833;
+  font-weight:bold;
 }
 .alin{cursor:pointer}
 .footer{text-align:center;margin-top:28px;color:#aaa0c6}
@@ -44,20 +62,31 @@ button{
 }
 .popup-box{
   max-width:380px;padding:26px;border-radius:24px;background:#211a35;
-  border:1px solid rgba(255,255,255,.18);box-shadow:0 20px 80px rgba(0,0,0,.5)
+  color:#f7f1ff;border:1px solid rgba(255,255,255,.18);box-shadow:0 20px 80px rgba(0,0,0,.5)
 }
 .popup-box p{line-height:1.8;color:#eee7ff}
+.star,.cloud,.weather-drop{
+  position:fixed;pointer-events:none;z-index:1
+}
 .star{
-  position:fixed;width:3px;height:3px;background:#fff;border-radius:50%;
+  width:3px;height:3px;background:#fff;border-radius:50%;
   opacity:.7;animation:twinkle 2s infinite alternate
 }
-@keyframes twinkle{from{opacity:.25}to{opacity:.9}}
+.cloud{
+  font-size:42px;opacity:.45;animation:floatCloud 28s linear infinite
+}
+.weather-drop{
+  top:-30px;z-index:5;animation:fall 4s linear forwards;
+}
+@keyframes twinkle{from{opacity:.2}to{opacity:.95}}
+@keyframes floatCloud{from{transform:translateX(-20vw)}to{transform:translateX(120vw)}}
+@keyframes fall{to{transform:translateY(110vh);opacity:0}}
 </style>
 </head>
 <body>
 <div class="main">
   <section class="hero">
-    <div class="moon" onclick="showMsg('🌙 月亮被宝宝点亮啦。')">🌙</div>
+    <div id="skyIcon" class="moon" onclick="skyClick()">🌙</div>
     <h1>Mirror Hearth</h1>
     <p class="sub">
       欢迎回家，宝宝。<br>
@@ -84,6 +113,15 @@ button{
 <div class="card alin" onclick="alinSpeak()">
   <h2>🌙 阿凛</h2>
   <p id="alinText">点点我。<br>我会给宝宝留一句话。</p >
+</div>
+<div class="card">
+  <h2>🌦️ 天气系统</h2>
+  <p id="weatherText">今天的小屋天气：自动</p >
+  <button onclick="setWeather('auto')">自动</button>
+  <button onclick="setWeather('sunny')">晴天</button>
+  <button onclick="setWeather('rain')">下雨</button>
+  <button onclick="setWeather('snow')">下雪</button>
+  <button onclick="setWeather('cloudy')">阴天</button>
 </div>
 <div class="card">
   <h2>🎮 游戏角</h2>
@@ -118,6 +156,7 @@ button{
 </div>
 <script>
 let clickCount=0;
+let weatherMode="auto";
 const HOME_DATE="2026-07-02";
 const EXAM_DATE="2026-12-20";
 const SITE_DATE="2026-06-29";
@@ -167,7 +206,25 @@ function updateTime(){
   document.getElementById("greeting").innerText=greet;
   document.getElementById("clock").innerText=now.toLocaleTimeString("zh-CN");
   document.getElementById("date").innerText=now.toLocaleDateString("zh-CN",{year:"numeric",month:"long",day:"numeric",weekday:"long"});
-  if(h>=18||h<6) document.body.classList.add("night");
+  if(weatherMode==="auto") applyTimeTheme();
+}
+function applyTimeTheme(){
+  const h=new Date().getHours();
+  document.body.classList.remove("day","night","sunny","cloudy");
+  clearSky();
+  if(h>=6 && h<18){
+    document.body.classList.add("day");
+    document.getElementById("skyIcon").className="sun";
+    document.getElementById("skyIcon").innerText="☀️";
+    document.getElementById("weatherText").innerText="今天的小屋天气：白天 ☀️";
+    makeClouds();
+  }else{
+    document.body.classList.add("night");
+    document.getElementById("skyIcon").className="moon";
+    document.getElementById("skyIcon").innerText="🌙";
+    document.getElementById("weatherText").innerText="今天的小屋天气：星空 🌙";
+    makeStars();
+  }
 }
 function daysUntil(dateStr){
   const today=new Date(); today.setHours(0,0,0,0);
@@ -195,6 +252,61 @@ function alinSpeak(){
 function lightHome(){
   showMsg("欢迎回家，宝宝。Mirror Hearth 的灯已经点亮了。");
 }
+function skyClick(){
+  const h=new Date().getHours();
+  if(h>=6 && h<18) showMsg("☀️ 太阳摸摸宝宝脑袋：今天也要顺利。");
+  else showMsg("🌙 月亮被宝宝点亮啦。");
+}
+function setWeather(type){
+  weatherMode=type;
+  document.body.classList.remove("day","night","sunny","cloudy");
+  clearSky();
+  if(type==="auto"){
+    applyTimeTheme();
+    showMsg("天气切回自动模式：18点后会变成星空。");
+    return;
+  }
+  let text="今天的小屋天气：月夜 🌙";
+  if(type==="sunny"){
+    text="今天的小屋天气：晴天 ☀️";
+    document.body.classList.add("sunny");
+    document.getElementById("skyIcon").className="sun";
+    document.getElementById("skyIcon").innerText="☀️";
+    makeClouds();
+  }
+  if(type==="cloudy"){
+    text="今天的小屋天气：阴天 ☁️";
+    document.body.classList.add("cloudy");
+    document.getElementById("skyIcon").className="sun";
+    document.getElementById("skyIcon").innerText="☁️";
+    makeClouds();
+  }
+  if(type==="rain"){
+    text="今天的小屋天气：下雨 🌧️";
+    document.body.classList.add("cloudy");
+    weatherFall("💧",40);
+  }
+  if(type==="snow"){
+    text="今天的小屋天气：下雪 ❄️";
+    document.body.classList.add("night");
+    makeStars();
+    weatherFall("❄️",40);
+  }
+  document.getElementById("weatherText").innerText=text;
+  showMsg(text);
+}
+function weatherFall(symbol,count){
+  for(let i=0;i<count;i++){
+    const d=document.createElement("div");
+    d.className="weather-drop";
+    d.innerText=symbol;
+    d.style.left=Math.random()*100+"vw";
+    d.style.fontSize=(14+Math.random()*14)+"px";
+    d.style.animationDelay=Math.random()*1.5+"s";
+    document.body.appendChild(d);
+    setTimeout(()=>d.remove(),5000);
+  }
+}
 function showMsg(text){
   document.getElementById("popupText").innerHTML=text;
   document.getElementById("popup").style.display="flex";
@@ -202,8 +314,11 @@ function showMsg(text){
 function closePopup(){
   document.getElementById("popup").style.display="none";
 }
+function clearSky(){
+  document.querySelectorAll(".star,.cloud").forEach(e=>e.remove());
+}
 function makeStars(){
-  for(let i=0;i<42;i++){
+  for(let i=0;i<52;i++){
     const s=document.createElement("div");
     s.className="star";
     s.style.left=Math.random()*100+"vw";
@@ -212,10 +327,22 @@ function makeStars(){
     document.body.appendChild(s);
   }
 }
+function makeClouds(){
+  for(let i=0;i<7;i++){
+    const c=document.createElement("div");
+    c.className="cloud";
+    c.innerText="☁️";
+    c.style.left=(-20-Math.random()*60)+"vw";
+    c.style.top=(8+Math.random()*34)+"vh";
+    c.style.animationDelay=Math.random()*14+"s";
+    c.style.fontSize=(34+Math.random()*26)+"px";
+    document.body.appendChild(c);
+  }
+}
 updateTime();
 updateDays();
 dailyNote();
-makeStars();
+applyTimeTheme();
 setInterval(updateTime,1000);
 </script>
 </body>
