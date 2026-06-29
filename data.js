@@ -1,4 +1,4 @@
-const words=[
+const alinWords=[
 "欢迎回家，宝宝。",
 "今天也辛苦了。",
 "先坐下，慢慢来。",
@@ -103,14 +103,14 @@ const words=[
 "你的小情绪也算数。",
 "宝宝，欢迎回到 Mirror Hearth。"
 ];
-const eggs=[
+const alinEggs=[
 "宝宝今天很喜欢戳我。",
 "……我没有跑。",
 "我就在这里。",
 "再戳一下，小屋的灯会更亮。",
 "彩蛋触发：Mirror Hearth 悄悄抱住了你。"
 ];
-const notes=[
+const dailyNotes=[
 "今天也慢慢生活。",
 "先吃饭，再烦恼。",
 "小屋的灯一直亮着。",
