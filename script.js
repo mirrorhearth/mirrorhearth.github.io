@@ -1,4 +1,3 @@
-<script>
 function toggleCabinLight(){
   const cabin=document.getElementById("cabinScene");
   cabin.classList.toggle("on");
@@ -301,4 +300,3 @@ updateDays();
 dailyNote();
 applyTimeTheme();
 setInterval(updateTime,1000);
-</script>
