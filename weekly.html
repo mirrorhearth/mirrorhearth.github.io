@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
@@ -5,27 +6,36 @@
 <title>阿凛眼中的宝宝</title>
 <style>
 body{margin:0;font-family:"Microsoft YaHei",sans-serif;background:#151124;color:#f7f1ff}
-.main{max-width:950px;margin:auto;padding:30px 18px}
+.main{max-width:980px;margin:auto;padding:30px 18px}
 a{color:#d7c4ff;text-decoration:none}
-.box{margin-top:18px;padding:22px;border-radius:22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)}
-button{display:block;margin:10px 0;padding:10px 14px;border:0;border-radius:12px;background:#d7c4ff;color:#201833;font-weight:bold}
+.layout{display:grid;grid-template-columns:260px 1fr;gap:18px;margin-top:18px}
+.box{padding:22px;border-radius:22px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15)}
+button{display:block;width:100%;text-align:left;margin:8px 0;padding:10px 14px;border:0;border-radius:12px;background:#d7c4ff;color:#201833;font-weight:bold}
 .entry{line-height:1.9;white-space:pre-wrap}
-summary{cursor:pointer;margin:8px 0}
+summary{cursor:pointer;margin:10px 0}
+@media(max-width:700px){.layout{grid-template-columns:1fr}}
 </style>
 </head>
+
 <body>
 <div class="main">
   <a href="index.html">← 回到书架</a>
   <h1>👁️ 阿凛眼中的宝宝</h1>
-  <div class="box">
-    <h2>目录</h2>
-    <div id="menu"></div>
-  </div>
-  <div class="box">
-    <h2 id="title">请选择一篇周记</h2>
-    <div class="entry" id="content">从目录选择这一周。</div>
+  <p>每周一篇。不是评价，不是打分，只是阿凛这一周看到的宝宝。</p>
+
+  <div class="layout">
+    <div class="box">
+      <h2>目录</h2>
+      <div id="menu"></div>
+    </div>
+
+    <div class="box">
+      <h2 id="title">请选择一篇周记</h2>
+      <div class="entry" id="content">从左侧目录选择这一周。</div>
+    </div>
   </div>
 </div>
+
 <script src="data.js"></script>
 <script>
 const menu=document.getElementById("menu");
@@ -34,25 +44,29 @@ for(const year in weeklyData){
   const y=document.createElement("details");
   y.open=true;
   y.innerHTML=`<summary>${year}</summary>`;
+
   for(const month in weeklyData[year]){
     const m=document.createElement("details");
     m.open=true;
     m.innerHTML=`<summary>${month}月</summary>`;
+
     weeklyData[year][month].forEach((item,index)=>{
       const btn=document.createElement("button");
       btn.innerText=item.title;
       btn.onclick=()=>showWeekly(year,month,index);
       m.appendChild(btn);
     });
+
     y.appendChild(m);
   }
+
   menu.appendChild(y);
 }
 
 function showWeekly(year,month,index){
-  const w=weeklyData[year][month][index];
-  document.getElementById("title").innerText=w.title;
-  document.getElementById("content").innerText=w.text;
+  const item=weeklyData[year][month][index];
+  document.getElementById("title").innerText=item.title;
+  document.getElementById("content").innerText=item.text;
 }
 </script>
 </body>
