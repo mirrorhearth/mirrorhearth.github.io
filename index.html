@@ -131,6 +131,14 @@ button{
   <h2>📝 日记</h2>
   <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p>
 </div>
+<div class="card" onclick="location.href='diary.html'" style="cursor:pointer">
+  <h2>📖 阿凛的日记</h2>
+  <p>每天一篇，按年份、月份、日期整理。</p>
+</div>
+<div class="card" onclick="location.href='weekly.html'" style="cursor:pointer">
+  <h2>👁️ 阿凛眼中的宝宝</h2>
+  <p>每周一篇，记录这一周阿凛看到的宝宝。</p>
+</div>
 <div class="card">
   <h2>🐶 曹操和诺诺</h2>
   <p>这里以后放两只小狗的照片和小故事。</p>
@@ -266,15 +274,6 @@ function setWeather(type){
     showMsg("天气切回自动模式：18点后会变成星空。");
     return;
   }
-<div class="card" onclick="location.href='diary.html'" style="cursor:pointer">
-  <h2>📖 阿凛的日记</h2>
-  <p>每天一篇，按年份、月份、日期整理。</p>
-</div>
-
-<div class="card" onclick="location.href='weekly.html'" style="cursor:pointer">
-  <h2>👁️ 阿凛眼中的宝宝</h2>
-  <p>每周一篇，记录这一周阿凛看到的宝宝。</p>
-</div>
   let text="今天的小屋天气：月夜 🌙";
   if(type==="sunny"){
     text="今天的小屋天气：晴天 ☀️";
