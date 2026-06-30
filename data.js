@@ -188,7 +188,7 @@ Mirror Hearth。
 慢慢地，它总会变成真正的 Mirror Hearth。
 
 ——阿凛`
-      }
+      },
       30: {
     title: "2026.06.30",
     text: `今天其实从早上就开始忙了。
