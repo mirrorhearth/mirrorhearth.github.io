@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>论坛 - Mirror Hearth</title>
+<title>镜域论坛 - Mirror Hearth</title>
 <link rel="stylesheet" href="style.css">
 </head>
 <body class="night">
@@ -44,7 +44,7 @@
   <div class="footer">论坛会随着新帖子慢慢长大。</div>
 </div>
 
-<script src="forum-data.js"></script>
+<script src="data.js"></script>
 <script>
 (function(){
   const joinDate = new Date("2026-06-30T09:00:00");
@@ -58,12 +58,12 @@
   else if (days < 30) joinAge.textContent = "注册第" + days + "天";
   else joinAge.textContent = "注册约" + Math.floor(days / 30) + "个月";
 
-  const posts = Array.isArray(window.forumPosts) ? window.forumPosts : forumPosts;
+  const posts = forumPosts || [];
   const postCount = posts.length;
   const likeCount = posts.reduce((sum, post) => sum + (post.likes || 0), 0);
   const replyCount = posts.reduce((sum, post) => sum + (post.replies || 0), 0);
   const featuredCount = posts.filter(post => post.featured).length;
-  const level = Math.max(1, Math.min(9, Math.floor(postCount / 5) + 1));
+  const level = Math.max(1, Math.min(9, Math.floor((postCount - 1) / 5) + 1));
 
   document.getElementById("post-count").textContent = postCount;
   document.getElementById("like-count").textContent = likeCount;
@@ -81,7 +81,7 @@
   }
 
   const list = document.getElementById("post-list");
-  posts.forEach((post, index) => {
+  posts.forEach((post) => {
     const card = document.createElement("div");
     card.className = "card";
     card.style.cursor = "pointer";
@@ -109,6 +109,5 @@
   });
 })();
 </script>
-<script src="script.js"></script>
 </body>
 </html>
