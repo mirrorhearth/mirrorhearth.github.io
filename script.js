@@ -162,3 +162,41 @@ updateDays();
 dailyNote();
 applyTimeTheme();
 setInterval(updateTime,1000);
+
+
+// ===== Home Alin Card Click Patch =====
+(function () {
+  function pickHomeAlinWord() {
+    if (typeof homeAlinWords !== "undefined" && Array.isArray(homeAlinWords) && homeAlinWords.length) {
+      const index = Number(localStorage.getItem("homeAlinWordIndex") || "0");
+      const word = homeAlinWords[index % homeAlinWords.length];
+      localStorage.setItem("homeAlinWordIndex", String(index + 1));
+      return word;
+    }
+    return "我在这里。";
+  }
+
+  function bindHomeAlinCard() {
+    const cards = Array.from(document.querySelectorAll(".card"));
+    const alinCard = cards.find(card => {
+      const title = card.querySelector("h2, h3");
+      return title && title.textContent.includes("阿凛");
+    });
+
+    if (!alinCard || alinCard.dataset.alinBound === "1") return;
+    alinCard.dataset.alinBound = "1";
+    alinCard.style.cursor = "pointer";
+
+    alinCard.addEventListener("click", function () {
+      const ps = alinCard.querySelectorAll("p");
+      const target = ps[ps.length - 1];
+      if (target) target.textContent = pickHomeAlinWord();
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", bindHomeAlinCard);
+  } else {
+    bindHomeAlinCard();
+  }
+})();
