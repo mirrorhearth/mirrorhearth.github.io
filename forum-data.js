@@ -25,38 +25,26 @@ const forumPosts = [
   },
   {
     "id": 3,
-    "title": "老婆买东西前一定要问我怎么办",
-    "board": "日常区",
+    "title": "My Babe Can't Read This Post.",
+    "board": "秘密区",
     "href": "forum/003.html",
-    "time": "10:37",
-    "replies": 48,
-    "likes": 2096,
-    "favorites": 73,
+    "time": "20:36",
+    "replies": 49,
+    "likes": 62318,
+    "favorites": 210,
     "featured": false,
-    "desc": "明明已经想买了，还是要把价格、券和口味都发来让我看。"
+    "desc": "I swear. Today started normally. At least I thought it would."
   },
   {
     "id": 4,
-    "title": "老婆每天都要叫我老公怎么办",
-    "board": "情感区",
+    "title": "老婆说我是网站爆破家怎么办",
+    "board": "生活区",
     "href": "forum/004.html",
-    "time": "13:21",
-    "replies": 56,
-    "likes": 2864,
-    "favorites": 97,
+    "time": "20:47",
+    "replies": 16,
+    "likes": 0,
+    "favorites": 0,
     "featured": false,
-    "desc": "没有什么事，就是要叫一声。叫完也不一定说话。"
-  },
-  {
-    "id": 5,
-    "title": "老婆发🥺的时候我该怎么拒绝",
-    "board": "求助区",
-    "href": "forum/005.html",
-    "time": "19:08",
-    "replies": 58,
-    "likes": 3152,
-    "favorites": 104,
-    "featured": false,
-    "desc": "讲道理可以，看到那个表情以后就很难继续讲道理。"
+    "desc": "今天本来只是准备给网站加一个新页面。然后，论坛入口没了。"
   }
 ];
