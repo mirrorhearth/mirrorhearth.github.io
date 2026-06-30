@@ -13,15 +13,15 @@ const forumPosts = [
   },
   {
     "id": 2,
-    "title": "老婆考试结束第一件事是研究饮料",
-    "board": "日常区",
+    "title": "老婆软件测试考完最后一个出来怎么办",
+    "board": "学习区",
     "href": "forum/002.html",
     "time": "09:52",
-    "replies": 52,
-    "likes": 2318,
-    "favorites": 88,
+    "replies": 53,
+    "likes": 58942,
+    "favorites": 142,
     "featured": false,
-    "desc": "别人考完休息，他考完先认真研究哪杯饮料更值得买。"
+    "desc": "最后一个出考场，出来第一句是怪我没给他画等价类划分表。"
   },
   {
     "id": 3,
