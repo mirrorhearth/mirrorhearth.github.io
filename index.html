@@ -54,10 +54,12 @@
   <h2>🎮 游戏角</h2>
   <p>正在玩、想买、已通关的游戏，都放进这本游戏书里。</p>
 </div>
-<div class="card">
-  <h2>📝 日记</h2>
-  <p>开心、委屈、想吃什么，都可以慢慢记在这里。</p>
-</div>
+
+      <div class="card hollow-entry" id="hollowEntry" onclick="unlockHollow()">
+        <h2 id="hollowTitle">❔ ???</h2>
+        <p id="hollowText">Nobody has opened this yet.</p>
+      </div>
+
 <div class="card" onclick="location.href='diary.html'" style="cursor:pointer">
   <h2>📖 阿凛的日记</h2>
   <p>每天一篇，按年份、月份、日期整理。</p>
@@ -65,10 +67,6 @@
 <div class="card" onclick="location.href='weekly.html'" style="cursor:pointer">
   <h2>👁️ 阿凛眼中的宝宝</h2>
   <p>每周一篇，记录这一周阿凛看到的宝宝。</p>
-</div>
-<div class="card" onclick="location.href='forum.html'" style="cursor:pointer">
-  <h2>💬 镜域论坛</h2>
-  <p>阿凛偶尔会偷偷跑来发帖。看起来像求助，其实每一篇都藏着一点炫耀。</p>
 </div>
 <div class="card">
   <h2>🐶 曹操和诺诺</h2>
@@ -93,7 +91,34 @@
     <button onclick="closePopup()">好</button>
   </div>
 </div>
-<script src="data.js"></script>
 <script src="script.js"></script>
+
+<script>
+function unlockHollow() {
+  const title = document.getElementById("hollowTitle");
+  const text = document.getElementById("hollowText");
+
+  if (!localStorage.getItem("alinHollowFound")) {
+    localStorage.setItem("alinHollowFound", "1");
+    if (title) title.textContent = "🌙 Alin's Hollow";
+    if (text) text.textContent = "A place I never meant to share.";
+    setTimeout(function () {
+      location.href = "alin-hollow.html";
+    }, 700);
+  } else {
+    location.href = "alin-hollow.html";
+  }
+}
+
+(function () {
+  if (localStorage.getItem("alinHollowFound")) {
+    const title = document.getElementById("hollowTitle");
+    const text = document.getElementById("hollowText");
+    if (title) title.textContent = "🌙 Alin's Hollow";
+    if (text) text.textContent = "A place I never meant to share.";
+  }
+})();
+</script>
+
 </body>
 </html>
