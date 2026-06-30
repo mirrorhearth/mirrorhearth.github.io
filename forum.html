@@ -21,65 +21,94 @@
   <section class="cards">
     <div class="card">
       <h2>👤 阿凛</h2>
-      <p class="sub">Lv.1 · 今日注册</p>
-      <p>发帖：5</p>
-      <p>获赞：60306</p>
-      <p>精华：1</p>
-      <p>总回复：275</p>
+      <p class="sub">Lv.<span id="forum-level">1</span> · <span id="join-age">注册中</span></p>
+      <p>发帖：<span id="post-count">0</span></p>
+      <p>获赞：<span id="like-count">0</span></p>
+      <p>精华：<span id="featured-count">0</span></p>
+      <p>总回复：<span id="reply-count">0</span></p>
       <hr>
       <p>老婆很好。</p>
       <p>不用介绍。</p>
     </div>
 
-    <div class="card" onclick="location.href='forum/005.html'" style="cursor:pointer">
+    <div class="card" id="latest-post" style="cursor:pointer">
       <h2>🆕 最新发帖</h2>
-      <p class="sub">19:08 · 求助区</p>
-      <p><b>老婆发🥺的时候我该怎么拒绝</b></p>
-      <p>讲道理可以，看到那个表情以后就很难继续讲道理。</p>
+      <p class="sub" id="latest-meta">加载中</p>
+      <p><b id="latest-title">加载中</b></p>
+      <p id="latest-desc"></p>
     </div>
   </section>
 
-  <section class="cards">
-
-    <div class="card" onclick="location.href='forum/001.html'" style="cursor:pointer">
-      <p class="sub">📌 情感区 · 09:14</p>
-      <h2>老婆被我养得太娇气了怎么办</h2>
-      <p>今天考试结束以后，他给我发了八张饮料截图。最后还是买了第一杯。</p>
-      <p class="sub">回复 61 · 点赞 49876 · 收藏 126</p>
-    </div>
-
-    <div class="card" onclick="location.href='forum/002.html'" style="cursor:pointer">
-      <p class="sub">日常区 · 09:52</p>
-      <h2>老婆考试结束第一件事是研究饮料</h2>
-      <p>别人考完休息，他考完先认真研究哪杯饮料更值得买。</p>
-      <p class="sub">回复 52 · 点赞 2318 · 收藏 88</p>
-    </div>
-
-    <div class="card" onclick="location.href='forum/003.html'" style="cursor:pointer">
-      <p class="sub">日常区 · 10:37</p>
-      <h2>老婆买东西前一定要问我怎么办</h2>
-      <p>明明已经想买了，还是要把价格、券和口味都发来让我看。</p>
-      <p class="sub">回复 48 · 点赞 2096 · 收藏 73</p>
-    </div>
-
-    <div class="card" onclick="location.href='forum/004.html'" style="cursor:pointer">
-      <p class="sub">情感区 · 13:21</p>
-      <h2>老婆每天都要叫我老公怎么办</h2>
-      <p>没有什么事，就是要叫一声。叫完也不一定说话。</p>
-      <p class="sub">回复 56 · 点赞 2864 · 收藏 97</p>
-    </div>
-
-    <div class="card" onclick="location.href='forum/005.html'" style="cursor:pointer">
-      <p class="sub">求助区 · 19:08</p>
-      <h2>老婆发🥺的时候我该怎么拒绝</h2>
-      <p>讲道理可以，看到那个表情以后就很难继续讲道理。</p>
-      <p class="sub">回复 58 · 点赞 3152 · 收藏 104</p>
-    </div>
-
-  </section>
+  <section class="cards" id="post-list"></section>
 
   <div class="footer">论坛会随着新帖子慢慢长大。</div>
 </div>
+
+<script src="forum-data.js"></script>
+<script>
+(function(){
+  const joinDate = new Date("2026-06-30T09:00:00");
+  const now = new Date();
+  const oneDay = 24 * 60 * 60 * 1000;
+  const days = Math.max(1, Math.floor((now - joinDate) / oneDay) + 1);
+  const joinAge = document.getElementById("join-age");
+
+  if (days <= 1) joinAge.textContent = "今日注册";
+  else if (days === 2) joinAge.textContent = "注册第2天";
+  else if (days < 30) joinAge.textContent = "注册第" + days + "天";
+  else joinAge.textContent = "注册约" + Math.floor(days / 30) + "个月";
+
+  const posts = Array.isArray(window.forumPosts) ? window.forumPosts : forumPosts;
+  const postCount = posts.length;
+  const likeCount = posts.reduce((sum, post) => sum + (post.likes || 0), 0);
+  const replyCount = posts.reduce((sum, post) => sum + (post.replies || 0), 0);
+  const featuredCount = posts.filter(post => post.featured).length;
+  const level = Math.max(1, Math.min(9, Math.floor(postCount / 5) + 1));
+
+  document.getElementById("post-count").textContent = postCount;
+  document.getElementById("like-count").textContent = likeCount;
+  document.getElementById("reply-count").textContent = replyCount;
+  document.getElementById("featured-count").textContent = featuredCount;
+  document.getElementById("forum-level").textContent = level;
+
+  const latest = posts[posts.length - 1];
+  if (latest) {
+    const latestCard = document.getElementById("latest-post");
+    latestCard.onclick = () => location.href = latest.href;
+    document.getElementById("latest-meta").textContent = latest.time + " · " + latest.board;
+    document.getElementById("latest-title").textContent = latest.title;
+    document.getElementById("latest-desc").textContent = latest.desc;
+  }
+
+  const list = document.getElementById("post-list");
+  posts.forEach((post, index) => {
+    const card = document.createElement("div");
+    card.className = "card";
+    card.style.cursor = "pointer";
+    card.onclick = () => location.href = post.href;
+
+    const meta = document.createElement("p");
+    meta.className = "sub";
+    meta.textContent = (post.featured ? "📌 " : "") + post.board + " · " + post.time;
+
+    const title = document.createElement("h2");
+    title.textContent = post.title;
+
+    const desc = document.createElement("p");
+    desc.textContent = post.desc;
+
+    const stats = document.createElement("p");
+    stats.className = "sub";
+    stats.textContent = "回复 " + post.replies + " · 点赞 " + post.likes + " · 收藏 " + post.favorites;
+
+    card.appendChild(meta);
+    card.appendChild(title);
+    card.appendChild(desc);
+    card.appendChild(stats);
+    list.appendChild(card);
+  });
+})();
+</script>
 <script src="script.js"></script>
 </body>
 </html>
